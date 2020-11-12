@@ -11,6 +11,8 @@ public:
 
     ExpressionTree& Insert(const Token& token);
 
+    void Inorder(bool (* action)(const Token* pData));
+
 	ExpressionTree();
 	~ExpressionTree();
 };

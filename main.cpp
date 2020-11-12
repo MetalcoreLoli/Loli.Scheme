@@ -1,3 +1,4 @@
+#include <string>
 #include <vector>
 #include <iostream>
 #include <functional>
@@ -38,41 +39,49 @@ void LexerTokenizedExpressionToString()
     unit_test::assert_that(result == "( + 1 2 ) ", "");
 }
 
-
 void ExpressionTreeInsertTest()
 {
    ExpressionTree tree; 
    Token op = Token(TokenType::Add);
    Token one = Token(TokenType::Num, "1");
    Token two = Token(TokenType::Num, "2");
-   tree.Insert(op);
-   tree.Insert(one);
-   tree.Insert(two);
+   tree.Insert(op)
+       .Insert(one)
+       .Insert(op)
+       .Insert(one)
+       .Insert(two)
+       ;
 
    unit_test::assert_that(
            tree.GetRoot()->GetValue()->GetValue() == "+", "excepted +");
 
    unit_test::assert_that(
            tree.GetRoot()->GetLeft()->GetValue()->GetValue() == "1", "excepted 1");
+    
+   std::string actualop = "+";
+   unit_test::assert_are_equal(
+           actualop, tree.GetRoot()->m_right->GetValue()->GetValue());
+   
+   std::string actualnum = "1";
+   unit_test::assert_are_equal(
+           actualnum, tree.GetRoot()->m_right->m_left->GetValue()->GetValue());
 
-  /* 
-   unit_test::assert_that(
-           tree.GetRoot()->GetRight()->GetValue()->GetValue() == "2", "excepted 2");
-           */
+   std::string actualnumOne = "2";
+   unit_test::assert_are_equal(
+           actualnumOne, tree.GetRoot()->m_right->m_right->GetValue()->GetValue());
 }
-
 
 int main()
 {
     std::vector<unit_test::Test> tests = {
-        unit_test::Test(LexerTokenizedExpression, "LexerTokenizedExpression"),
-        unit_test::Test(LexerTokenizedExpressionToString, "LexerTokenizedExpressionToString"),
-        unit_test::Test(ExpressionTreeInsertTest, "ExpressionTreeInsertTest"),
+        unit_test::Test(LexerTokenizedExpression,           "LexerTokenizedExpression"),
+        unit_test::Test(LexerTokenizedExpressionToString,   "LexerTokenizedExpressionToString"),
+        unit_test::Test(ExpressionTreeInsertTest,           "ExpressionTreeInsertTest"),
     };
+
     runTests(tests);
 	return 0;
 }
-
 
 void runTests(const std::vector<unit_test::Test>& tests)
 {

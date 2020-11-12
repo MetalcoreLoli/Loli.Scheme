@@ -14,7 +14,7 @@ void unit_test::run_test(TestFunc_t unit_test, const char* nameOfTest)
     }
     catch (const std::exception& ex)
     {
-        std::cout <<"[-] Test failure " << nameOfTest << ex.what() << "\n";       
+        std::cout <<"[-] Test failure " << nameOfTest << " " << ex.what() << "\n";       
     }
 }
 
