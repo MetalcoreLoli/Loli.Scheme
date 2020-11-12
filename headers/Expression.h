@@ -5,10 +5,10 @@
 class Expression
 {
 private:
-	Expression* m_right;
-	Expression* m_left;
 	Token* m_value;
 public:
+	Expression* m_right;
+	Expression* m_left;
 	Expression* GetRight() const {return m_right;}
 	void SetRight(Expression* value) {m_right = value;}
 

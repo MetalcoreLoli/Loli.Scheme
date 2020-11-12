@@ -3,5 +3,9 @@ HEADERS=./headers/*.h
 
 build:
 	g++ -g $(HEADERS) $(SOURCES) -o bin/app
+
+debug:
+	gdb bin/app
+
 run:
 	./bin/app
