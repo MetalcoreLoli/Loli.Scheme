@@ -4,6 +4,7 @@
 #include <functional>
 #include "headers/Token.h"
 #include "headers/Lexer.h"
+#include "headers/Parser.h"
 #include "headers/UnitTests.h"
 #include "headers/ExpressionTree.h"
 
@@ -36,7 +37,8 @@ void LexerTokenizedExpressionToString()
 
     std::vector<Token> expr = lexer.TokenizeExpression("(+ 1 2)");
     std::string result = lexer.TokenizedExpressionToString(expr);
-    unit_test::assert_that(result == "( + 1 2 ) ", "");
+    std::string excepted = "( + 1 2 ) ";
+    unit_test::assert_are_equal(excepted, result);
 }
 
 void ExpressionTreeInsertTest()
@@ -71,12 +73,27 @@ void ExpressionTreeInsertTest()
            actualnumOne, tree.GetRoot()->m_right->m_right->GetValue()->GetValue());
 }
 
+void ParserParseTest()
+{
+   Parser parser;
+   ExpressionTree* tree = parser.Parse("(+ 1 2)"); 
+
+   std::string op = "+";
+   std::string lvalue = "1";
+   std::string rvalue = "2";
+
+   unit_test::assert_are_equal(op, tree->GetRoot()->GetValue()->GetValue());
+   unit_test::assert_are_equal(lvalue, tree->GetRoot()->m_left->GetValue()->GetValue());
+   unit_test::assert_are_equal(rvalue, tree->GetRoot()->m_right->GetValue()->GetValue());
+}
+
 int main()
 {
     std::vector<unit_test::Test> tests = {
         unit_test::Test(LexerTokenizedExpression,           "LexerTokenizedExpression"),
         unit_test::Test(LexerTokenizedExpressionToString,   "LexerTokenizedExpressionToString"),
         unit_test::Test(ExpressionTreeInsertTest,           "ExpressionTreeInsertTest"),
+        unit_test::Test(ParserParseTest,                    "ParserParseTest"),
     };
 
     runTests(tests);

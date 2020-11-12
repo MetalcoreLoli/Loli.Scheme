@@ -1,7 +1,17 @@
 #include "../headers/Parser.h"
-Parser::Parser()
+
+ExpressionTree* Parser::Parse(const std::string& expression)
 {
-}
-Parser::~Parser()
-{
+    Lexer lexer;
+    std::vector<Token> tokenizedExpression = lexer.TokenizeExpression(expression);    
+
+    ExpressionTree* tree = new ExpressionTree();
+
+    for (int i = 1; i < tokenizedExpression.size()-1;i++)
+    {
+        tree->Insert(tokenizedExpression[i]); 
+    }
+    
+    throw std::runtime_error{"TODO: Parse Method"};
+    return tree;
 }
