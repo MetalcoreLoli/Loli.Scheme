@@ -4,6 +4,7 @@
 #include "headers/Token.h"
 #include "headers/Lexer.h"
 #include "headers/UnitTests.h"
+#include "headers/ExpressionTree.h"
 
 void runTests(const std::vector<unit_test::Test>& tests);
 
@@ -38,11 +39,31 @@ void LexerTokenizedExpressionToString()
 }
 
 
+void ExpressionTreeInsertTest()
+{
+   ExpressionTree tree; 
+   Token op = Token(TokenType::Add);
+   Token one = Token(TokenType::Num, "1");
+   Token two = Token(TokenType::Num, "2");
+   tree.Insert(op).Insert(one).Insert(two);
+
+   unit_test::assert_that(
+           tree.GetRoot()->GetValue()->GetValue() == "+", "excepted +");
+
+   unit_test::assert_that(
+           tree.GetRoot()->GetLeft()->GetValue()->GetValue() == "1", "excepted 1");
+   
+   unit_test::assert_that(
+           tree.GetRoot()->GetRight()->GetValue()->GetValue() == "2", "excepted 2");
+}
+
+
 int main()
 {
     std::vector<unit_test::Test> tests = {
         unit_test::Test(LexerTokenizedExpression, "LexerTokenizedExpression"),
         unit_test::Test(LexerTokenizedExpressionToString, "LexerTokenizedExpressionToString"),
+        unit_test::Test(ExpressionTreeInsertTest, "ExpressionTreeInsertTest"),
     };
     runTests(tests);
 	return 0;
