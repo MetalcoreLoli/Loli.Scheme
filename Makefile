@@ -9,3 +9,6 @@ debug:
 
 run:
 	./bin/app
+
+test:
+	clear && make build run

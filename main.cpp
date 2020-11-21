@@ -73,19 +73,36 @@ void ExpressionTreeInsertTest()
            actualnumOne, tree.GetRoot()->m_right->m_right->GetValue()->GetValue());
 }
 
+void ExpressionTreeToStringTest()
+{
+    ExpressionTree tree;
+    Token op = Token(TokenType::Add);
+    Token one = Token(TokenType::Num, "1");
+    Token two = Token(TokenType::Num, "2");
+    tree.Insert(op)
+        .Insert(one)
+        .Insert(op)
+        .Insert(one)
+        .Insert(two)
+        ;
+
+    std::string excepted = "(+ 1 (+ 1 2))";
+    std::string actual = tree.ToString();
+    unit_test::assert_are_equal(excepted, actual);
+}
+
 void ParserParseTest()
 {
    Parser parser;
-   ExpressionTree* tree = parser.Parse("(+ 1 2)"); 
-
-   std::string op = "+";
-   std::string lvalue = "1";
-   std::string rvalue = "2";
-
-   unit_test::assert_are_equal(op, tree->GetRoot()->GetValue()->GetValue());
-   unit_test::assert_are_equal(lvalue, tree->GetRoot()->m_left->GetValue()->GetValue());
-   unit_test::assert_are_equal(rvalue, tree->GetRoot()->m_right->GetValue()->GetValue());
+   ExpressionTree* tree = parser.Parse("(+ 1 2 3)"); 
+   
+   std::string excepted = "(+ 1 (+ 2 3))";
+   std::string actual = tree->ToString(); 
+   unit_test::assert_are_equal(excepted, actual);
+   delete tree;
 }
+
+
 
 int main()
 {
@@ -93,6 +110,7 @@ int main()
         unit_test::Test(LexerTokenizedExpression,           "LexerTokenizedExpression"),
         unit_test::Test(LexerTokenizedExpressionToString,   "LexerTokenizedExpressionToString"),
         unit_test::Test(ExpressionTreeInsertTest,           "ExpressionTreeInsertTest"),
+        unit_test::Test(ExpressionTreeToStringTest,         "ExpressionTreeToStringTest"),
         unit_test::Test(ParserParseTest,                    "ParserParseTest"),
     };
 

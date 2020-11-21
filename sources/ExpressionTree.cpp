@@ -54,3 +54,29 @@ void ExpressionTree::Inorder(bool (* action)(const Token* pData))
 {
     InorderHelper(m_root, action);
 }
+
+static std::string ToStringHelper(Expression *pLink)
+{
+    std::string expr = "";
+    if (!pLink) return expr; 
+    if (pLink->GetValue()->GetType() == TokenType::Num)
+    {
+        return expr.append(pLink->GetValue()->GetValue());
+    }
+    else 
+    {
+        return expr
+            .append("(")
+            .append(pLink->GetValue()->GetValue())
+            .append(" ")
+            .append(ToStringHelper(pLink->m_left))
+            .append(" ")
+            .append(ToStringHelper(pLink->m_right))
+            .append(")");    
+    }
+}
+
+std::string ExpressionTree::ToString()
+{
+    return ToStringHelper(m_root);
+}

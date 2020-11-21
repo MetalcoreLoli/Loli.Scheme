@@ -7,7 +7,7 @@ ExpressionTree* Parser::Parse(const std::string& expression)
 
     ExpressionTree* tree = new ExpressionTree();
 
-    for (int i = 1; i < tokenizedExpression.size()-1;i++)
+    for (size_t i = 1; i < tokenizedExpression.size()-1;i++)
     {
         tree->Insert(tokenizedExpression[i]); 
     }

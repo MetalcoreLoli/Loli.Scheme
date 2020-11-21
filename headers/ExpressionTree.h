@@ -13,6 +13,8 @@ public:
 
     void Inorder(bool (* action)(const Token* pData));
 
+    std::string ToString();
+
 	ExpressionTree();
 	~ExpressionTree();
 };
