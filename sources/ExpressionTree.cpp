@@ -90,3 +90,9 @@ std::string ExpressionTree::ToString()
 {
     return ToStringHelper(m_root);
 }
+
+
+Expression* ExpressionTree::Eval ()
+{
+    return m_root->Reduce()->Reduce();
+}

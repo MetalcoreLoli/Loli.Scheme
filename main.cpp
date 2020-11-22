@@ -91,6 +91,25 @@ void ExpressionTreeToStringTest()
     unit_test::assert_are_equal(excepted, actual);
 }
 
+void ExpressionTreeEvalTest()
+{ 
+    ExpressionTree tree;
+    Token op = Token(TokenType::Add);
+    Token one = Token(TokenType::Num, "1");
+    Token two = Token(TokenType::Num, "2");
+    tree.Insert(op)
+        .Insert(one)
+        .Insert(op)
+        .Insert(one)
+        .Insert(two)
+        ;
+
+    std::string excepted = "4";
+    std::string actual = tree.Eval()->GetValue()->GetValue();
+    
+    unit_test::assert_are_equal(excepted, actual);
+}
+
 void AddExpression()
 {
     Expression* add = new class AddExpression(
@@ -101,6 +120,7 @@ void AddExpression()
 
     unit_test::assert_are_equal(excepted, actual);
 }
+
 
 void ParserParseTest()
 {
@@ -122,6 +142,7 @@ int main()
         unit_test::Test(ExpressionTreeToStringTest,         "ExpressionTreeToStringTest"),
         unit_test::Test(ParserParseTest,                    "ParserParseTest"),
         unit_test::Test(AddExpression,                    "AddExpression"),
+        unit_test::Test(ExpressionTreeEvalTest,         "ExpressionTreeEvalTest"),
     };
 
     runTests(tests);

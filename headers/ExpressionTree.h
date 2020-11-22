@@ -16,6 +16,8 @@ public:
 
     void Inorder(bool (* action)(const Token* pData));
 
+    Expression* Eval();
+
     std::string ToString();
 
 	ExpressionTree();
