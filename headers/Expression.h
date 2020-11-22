@@ -2,9 +2,14 @@
 #include "Token.h"
 #include <string>
 
-class Expression
+struct IExpression {
+    virtual bool IsReducible() = 0;
+    virtual IExpression* Reduce() = 0;
+};
+
+class Expression 
 {
-private:
+protected:
 	Token* m_value;
 public:
 	Expression* m_right;
@@ -17,6 +22,9 @@ public:
 
 	Token* GetValue() const {return m_value;}
 	void SetValue(Token* value) {m_value = value;}
+
+    virtual bool IsReducible() ; 
+    virtual Expression* Reduce();
 
 	Expression();
 	Expression(TokenType type);

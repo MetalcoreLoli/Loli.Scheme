@@ -33,3 +33,11 @@ Expression::~Expression()
     delete m_right;
     delete m_value;
 }
+
+bool Expression::IsReducible()
+{
+    if (m_value->GetType() == TokenType::Num) return false;
+    else return true;
+}
+
+Expression* Expression::Reduce() {return nullptr;}

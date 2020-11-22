@@ -91,6 +91,17 @@ void ExpressionTreeToStringTest()
     unit_test::assert_are_equal(excepted, actual);
 }
 
+void AddExpression()
+{
+    Expression* add = new class AddExpression(
+            new NumberExpression("1"), new NumberExpression("2"));
+    
+    std::string excepted = "3";
+    std::string actual = add->Reduce()->GetValue()->GetValue();
+
+    unit_test::assert_are_equal(excepted, actual);
+}
+
 void ParserParseTest()
 {
    Parser parser;
@@ -102,8 +113,6 @@ void ParserParseTest()
    delete tree;
 }
 
-
-
 int main()
 {
     std::vector<unit_test::Test> tests = {
@@ -112,6 +121,7 @@ int main()
         unit_test::Test(ExpressionTreeInsertTest,           "ExpressionTreeInsertTest"),
         unit_test::Test(ExpressionTreeToStringTest,         "ExpressionTreeToStringTest"),
         unit_test::Test(ParserParseTest,                    "ParserParseTest"),
+        unit_test::Test(AddExpression,                    "AddExpression"),
     };
 
     runTests(tests);

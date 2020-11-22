@@ -16,7 +16,17 @@ static bool InsertHelper(Expression** ppLink, const Token& token)
     Expression* link = *ppLink;
     if (link == nullptr)
     {
-        link = new Expression(token.GetType(), token.GetValue());
+        switch (token.GetType())
+        {
+        case TokenType::Num:
+            link = new NumberExpression(token.GetValue());
+            break;
+        case TokenType::Add:
+            link = new AddExpression();
+            break;
+        default: 
+            link = new Expression(token.GetType(), token.GetValue());
+        }
         *ppLink = link;
     }
     else 

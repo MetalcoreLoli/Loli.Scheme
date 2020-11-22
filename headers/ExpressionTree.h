@@ -1,5 +1,8 @@
 #pragma once
 #include "Expression.h"
+#include "AddExpression.h"
+#include "NumberExpression.h"
+
 
 class ExpressionTree
 {
