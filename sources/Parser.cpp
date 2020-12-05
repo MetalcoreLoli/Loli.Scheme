@@ -1,4 +1,7 @@
 #include "../headers/Parser.h"
+#include <ostream>
+#include <iostream>
+#include <stdexcept>
 
 /// 
 /// Parsing string expression into ExpressionTree object
@@ -10,9 +13,53 @@ ExpressionTree* Parser::Parse(const std::string& expression)
     std::vector<Token> tokenizedExpression = lexer.TokenizeExpression(expression);    
 
     ExpressionTree* tree = new ExpressionTree();
+    
+    Token op(TokenType::Add);
 
-    for (size_t i = 1; i < tokenizedExpression.size()-1;i++)
+    std::vector<Token> args;
+
+
+    throw std::runtime_error{"TODO: inner expression parsing !!!"};
+    for (size_t i = 1; i < tokenizedExpression.size();i++)
     {
+        if (tokenizedExpression[i].GetType() == TokenType::Rp) continue;
+        else if (tokenizedExpression[i].IsOperation())
+        {
+            op = tokenizedExpression[i];
+            tree->Insert(op);
+        }
+        else if (tokenizedExpression[i].GetType() == TokenType::Lp)
+        {
+            std::vector<Token> innerExpression;
+            std::size_t j = i;
+
+            while (tokenizedExpression[j].GetType() != TokenType::Rp)
+            {
+                innerExpression.push_back(tokenizedExpression[j]);
+                j++;
+            }
+
+            i = j;
+            ExpressionTree* subtree = Parse(lexer.TokenizedExpressionToString(innerExpression));
+            args.push_back(*(subtree->Eval()->GetValue()));
+        }
+        else  
+        {
+            args.push_back(tokenizedExpression[i]);
+        }
+    }
+    for (std::size_t i = 1; i < args.size(); i++)
+    {
+        if (i % 2 == 0)
+        {
+            tree->Insert(op);
+            tree->Insert(args[i]);
+        }
+        else 
+        {
+            tree->Insert(args[i]);
+        }
+
     }
     
     return tree;

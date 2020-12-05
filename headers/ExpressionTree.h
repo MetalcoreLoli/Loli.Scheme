@@ -13,7 +13,7 @@ public:
 	void SetRoot(Expression* value) {m_root = value;}
 
     ExpressionTree& Insert(const Token& token);
-    ExpressionTree& Insert(const Expression& value);
+    ExpressionTree& Insert(Expression* value);
 
     void Inorder(bool (* action)(const Token* pData));
 
