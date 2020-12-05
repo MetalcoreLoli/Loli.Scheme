@@ -124,12 +124,23 @@ void AddExpression()
 
 void ParserParseTest()
 {
-   Parser parser;
-   ExpressionTree* tree = parser.Parse("(+ 1 2 3)"); 
-   
-   std::string excepted = "(+ 1 (+ 2 3))";
-   std::string actual = tree->ToString(); 
-   unit_test::assert_are_equal(excepted, actual);
+    Parser parser;
+    ExpressionTree* tree = parser.Parse("(+ 1 (+ 2 3))"); 
+    ExpressionTree* treeOne = parser.Parse("(+ 1 2 3)"); 
+    ExpressionTree* treeTwo = parser.Parse("(+ 1 (+ 2 3) 4)"); 
+
+
+    std::string excepted = "(+ 1 (+ 2 3))";
+    std::string exceptedTwo = "(+ 1 (+ 2 3) 4)";
+
+    std::string actual = tree->ToString(); 
+    std::string actualOne = treeOne->ToString(); 
+    std::string actualTwo = treeTwo->ToString(); 
+
+
+    unit_test::assert_are_equal(excepted, actual);
+    unit_test::assert_are_equal(excepted, actualOne);
+    unit_test::assert_are_equal(exceptedTwo, actualTwo);
    delete tree;
 }
 

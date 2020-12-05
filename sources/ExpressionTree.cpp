@@ -42,6 +42,26 @@ static bool InsertHelper(Expression** ppLink, const Token& token)
     }
     return true;
 }
+static bool InsertHelper(Expression** ppLink, const Expression& value)
+{
+    Expression* pLink = *ppLink;
+    if (pLink == nullptr)
+    {
+        pLink = const_cast<Expression*>(&value);
+        return true;
+    }
+    else 
+    {
+        if (pLink->GetLeft() == nullptr)
+        {
+            return InsertHelper(&(pLink->m_left), value);
+        }
+        else
+        {
+            return InsertHelper(&(pLink->m_right), value);
+        }
+    }
+}
 
 ExpressionTree& ExpressionTree::Insert(const Token& token)
 {
@@ -49,6 +69,15 @@ ExpressionTree& ExpressionTree::Insert(const Token& token)
         return static_cast<ExpressionTree&>(*this);
     else 
         throw std::runtime_error{"insert operation was failed"};
+}
+
+ExpressionTree& ExpressionTree::Insert(const Expression& value)
+{
+    if (InsertHelper(&m_root, value))
+        return static_cast<ExpressionTree&>(*this);
+    else 
+        throw std::runtime_error{"insert operation was failed"};
+    
 }
 
 

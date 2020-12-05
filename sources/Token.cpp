@@ -14,7 +14,6 @@ void Token::SetType(TokenType value)
     m_type = value;
 }
 
-
 Token::Token(TokenType type)
 {
     SetType(type);

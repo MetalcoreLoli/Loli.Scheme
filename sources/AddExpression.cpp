@@ -22,7 +22,7 @@ AddExpression::~AddExpression()
 }
 
 
-bool AddExpression::IsReducible() {return true;}
+bool AddExpression::IsReducible()  {return true;}
 
 Expression* AddExpression::Reduce()
 {
