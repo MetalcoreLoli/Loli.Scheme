@@ -140,9 +140,8 @@ void ParserParseTest()
 
 
     unit_test::assert_are_equal(excepted, actual);
-    unit_test::assert_are_equal(excepted, actualOne);
+    unit_test::assert_are_equal(exceptedOne, actualOne);
     unit_test::assert_are_equal(exceptedTwo, actualTwo);
-   delete tree;
 }
 
 int main()

@@ -23,6 +23,9 @@ public:
 	Token* GetValue() const {return m_value;}
 	void SetValue(Token* value) {m_value = value;}
 
+    TokenType GetTypeOfToken() const {return m_value->GetType();}
+    std::string GetValueOfToken() const {return m_value->GetValue();}
+
     virtual bool IsReducible() ; 
     virtual Expression* Reduce();
 

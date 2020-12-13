@@ -51,8 +51,6 @@ std::vector<Token> Lexer::TokenizeExpression(const std::string& expression)
     return tokenizedExpression;
 }
 
-
-
 std::string Lexer::TokenizedExpressionToString(const std::vector<Token> expression)
 {
     std::string stringExpression;

@@ -14,7 +14,7 @@ public:
     TokenType GetType() const {return m_type;}
 	void SetType(TokenType value);
 
-    bool IsOperation() {return TokenType::Add <= m_type && m_type <= TokenType::Div;}
+    bool IsOperation() const {return TokenType::Add <= m_type && m_type <= TokenType::Div;}
 
 	Token(TokenType type);
 	Token(TokenType type, const std::string& value);
