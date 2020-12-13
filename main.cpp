@@ -157,6 +157,8 @@ int main()
         unit_test::Test(ExpressionTreeEvalTest,         "ExpressionTreeEvalTest"),
     };
 
+    Parser parser;
+    ExpressionTree* tree = parser.Parse("(+ 1 (* 1 5))"); 
     runTests(tests);
 	return 0;
 }

@@ -7,6 +7,7 @@
 #include "Token.h"
 #include "Expression.h"
 #include "ExpressionTree.h"
+#include "Logger.h"
 
 struct Parser
 {

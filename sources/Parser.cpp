@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 
+
 /// 
 /// Parsing string expression into ExpressionTree object
 ///
@@ -18,8 +19,6 @@ ExpressionTree* Parser::Parse(const std::string& expression)
 
     std::vector<Token> args;
 
-
-    throw std::runtime_error{"TODO: inner expression parsing !!!"};
     for (size_t i = 1; i < tokenizedExpression.size();i++)
     {
         if (tokenizedExpression[i].GetType() == TokenType::Rp) continue;
@@ -31,7 +30,7 @@ ExpressionTree* Parser::Parse(const std::string& expression)
         else if (tokenizedExpression[i].GetType() == TokenType::Lp)
         {
             std::vector<Token> innerExpression;
-            std::size_t j = i;
+            std::size_t j = i + 1;
 
             while (tokenizedExpression[j].GetType() != TokenType::Rp)
             {
@@ -40,8 +39,11 @@ ExpressionTree* Parser::Parse(const std::string& expression)
             }
 
             i = j;
+            log_info("inner expr: %s", lexer.TokenizedExpressionToString(innerExpression).c_str());
             ExpressionTree* subtree = Parse(lexer.TokenizedExpressionToString(innerExpression));
-            args.push_back(*(subtree->Eval()->GetValue()));
+            log_info("subtree: %s", subtree->ToString().c_str());
+            log_info("subtree eval: %s", subtree->Eval()->GetValue()->GetValue().c_str());
+            args.push_back(*(subtree)->Eval()->GetValue());
         }
         else  
         {
@@ -61,6 +63,5 @@ ExpressionTree* Parser::Parse(const std::string& expression)
         }
 
     }
-    
     return tree;
 }
