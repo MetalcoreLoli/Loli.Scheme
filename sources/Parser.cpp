@@ -5,15 +5,6 @@
 #include <stdexcept>
 
 
-static std::vector<Token> SubExpression(const std::vector<Token>& source, int from, int to)
-{
-    std::vector<Token> sub;
-    for (int i = from; i < to; i++)
-        sub.push_back(source[i]);
-
-    return sub;
-}
-
 ///
 /// Function generating expression tree from 'args' with operation 'operation'
 /// /return Expression

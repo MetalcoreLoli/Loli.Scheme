@@ -1,12 +1,13 @@
 #include <vector>
+#include <stdexcept>
 namespace helper
 {
     
     ///
-    /// Funcition skip few elemnts of vector<T> from start of it
-    /// source is source vector
-    /// count is number of elements that will be skip
-    /// return new vector without skiped elements
+    /// Funcition skip few elemnts of vector<T> from start of it 
+    /// /source is source vector
+    /// /count is number of elements that will be skip
+    /// /return new vector without skiped elements
     ///
     template<typename T> std::vector<T> Skip(const std::vector<T>& source, int count)
     {
@@ -14,5 +15,15 @@ namespace helper
         for(int i = count; i < source.size(); i++)
             result.push_back(source[i]);
         return result;
+    }
+    template<typename T> std::vector<T> Sub(const std::vector<T>& source, int from, int to)
+    {
+        std::vector<T> sub;
+        if (source.size < to) throw std::runtime_error{"source size is less then 'to' param value"};
+        
+        for(int i = from; i < to; i++)
+            sub.push_back(source[i]);
+
+        return sub;
     }
 }
