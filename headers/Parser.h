@@ -5,9 +5,10 @@
 
 #include "Lexer.h"
 #include "Token.h"
+#include "Logger.h"
+#include "Helper.h"
 #include "Expression.h"
 #include "ExpressionTree.h"
-#include "Logger.h"
 
 struct Parser
 {

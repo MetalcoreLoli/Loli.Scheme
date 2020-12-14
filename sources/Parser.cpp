@@ -4,6 +4,16 @@
 #include <iostream>
 #include <stdexcept>
 
+
+static std::vector<Token> SubExpression(const std::vector<Token>& source, int from, int to)
+{
+    std::vector<Token> sub;
+    for (int i = from; i < to; i++)
+        sub.push_back(source[i]);
+
+    return sub;
+}
+
 ///
 /// Function generating expression tree from 'args' with operation 'operation'
 /// /return Expression
@@ -14,9 +24,7 @@ static Expression* GenerateExpressionTree (TokenType operation, const std::vecto
     if (args.size() > 1) 
     {
         Expression* left = new Expression(args[0].GetType(), args[0].GetValue());
-        std::vector<Token> new_args;
-        for (std::size_t i = 1; i < args.size(); i++)
-            new_args.push_back(args[i]);
+        std::vector<Token> new_args = helper::Skip(args, 1);
         return new Expression(operation, left, GenerateExpressionTree(operation, new_args));
     }
     else 
@@ -33,38 +41,45 @@ static Expression* ParseHelper(const std::vector<Token>& expression)
 
     for (std::size_t i = 0; i < expression.size(); i++)
     {
-       if (expression[i].GetType() == TokenType::Rp) continue;
-       else if (expression[i].GetType() == TokenType::Lp)
-       {
-           std::vector<Token> innerExpression;
-           int j = i + 1;
-           while (expression[j].GetType() != TokenType::Rp)
-           {
-               log_info ("%s", expression[j].GetValue().c_str());
-               innerExpression.push_back(expression[j]);
-               j++;
-           }
-           i = j - 1;
-           Expression* inner = ParseHelper(innerExpression);
-           if (inner->IsReducible())
-           {
-               tree->Insert(inner->Reduce()); 
-           }
-           else 
-               tree->Insert(inner); 
-       } 
-       else if (expression[i].IsOperation())
-       {
+        if (expression[i].IsOperation())
+        {
            op = expression[i].GetType(); 
-       }
-       else 
-       {
+        }
+        else if (expression[i].GetType() == TokenType::Rp) continue;
+        else if (expression[i].GetType() == TokenType::Lp)
+        {
+            std::vector<Token> innerExpression;
+            int j = i + 1;
+            while (expression[j].GetType() != TokenType::Rp)
+            {
+                log_info ("%s", expression[j].GetValue().c_str());
+                innerExpression.push_back(expression[j]);
+                j++;
+            }
+           
+            i = j - 1;
+            Expression* inner = ParseHelper(innerExpression);
+
+            if (inner->IsReducible())
+            {
+                tree->Insert(inner->Reduce()); 
+            }
+            else 
+                tree->Insert(inner); 
+        }
+        else 
+        {
             args.push_back(expression[i]);
-       }
+        }
     }
 
     tree->Insert(GenerateExpressionTree(op, args));
-    return tree->Eval();
+    if (tree->Root()->IsReducible())
+    {
+        return tree->Root()->Reduce();
+    }
+    else 
+        return tree->Root();
 }
 
 /// 

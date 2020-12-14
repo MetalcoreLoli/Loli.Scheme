@@ -55,22 +55,22 @@ void ExpressionTreeInsertTest()
        ;
 
    unit_test::assert_that(
-           tree.GetRoot()->GetValue()->GetValue() == "+", "excepted +");
+           tree.Root()->GetValue()->GetValue() == "+", "excepted +");
 
    unit_test::assert_that(
-           tree.GetRoot()->GetLeft()->GetValue()->GetValue() == "1", "excepted 1");
+           tree.Root()->GetLeft()->GetValue()->GetValue() == "1", "excepted 1");
     
    std::string actualop = "+";
    unit_test::assert_are_equal(
-           actualop, tree.GetRoot()->m_right->GetValue()->GetValue());
+           actualop, tree.Root()->m_right->GetValue()->GetValue());
    
    std::string actualnum = "1";
    unit_test::assert_are_equal(
-           actualnum, tree.GetRoot()->m_right->m_left->GetValue()->GetValue());
+           actualnum, tree.Root()->m_right->m_left->GetValue()->GetValue());
 
    std::string actualnumOne = "2";
    unit_test::assert_are_equal(
-           actualnumOne, tree.GetRoot()->m_right->m_right->GetValue()->GetValue());
+           actualnumOne, tree.Root()->m_right->m_right->GetValue()->GetValue());
 }
 
 void ExpressionTreeToStringTest()
