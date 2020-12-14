@@ -16,6 +16,11 @@ namespace helper
             result.push_back(source[i]);
         return result;
     }
+    ///
+    /// Function get sub vector<T> from source vector<T>
+    /// from is where it's start
+    /// to is where it's end
+    ///
     template<typename T> std::vector<T> Sub(const std::vector<T>& source, int from, int to)
     {
         std::vector<T> sub;

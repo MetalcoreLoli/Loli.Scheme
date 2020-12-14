@@ -30,7 +30,7 @@ static Expression* ParseHelper(const std::vector<Token>& expression)
     TokenType op; /*current operation of expression*/
     ExpressionTree* tree = new ExpressionTree();
 
-    for (std::size_t i = 0; i < expression.size(); i++)
+    for (std::size_t i = 1; i < expression.size(); i++)
     {
         if (expression[i].IsOperation())
         {
@@ -39,15 +39,13 @@ static Expression* ParseHelper(const std::vector<Token>& expression)
         else if (expression[i].GetType() == TokenType::Rp) continue;
         else if (expression[i].GetType() == TokenType::Lp)
         {
-            std::vector<Token> innerExpression;
             int j = i + 1;
             while (expression[j].GetType() != TokenType::Rp)
             {
-                log_info ("%s", expression[j].GetValue().c_str());
-                innerExpression.push_back(expression[j]);
                 j++;
             }
-           
+
+            std::vector<Token> innerExpression = helper::Sub(expression, i + 1, j);
             i = j - 1;
             Expression* inner = ParseHelper(innerExpression);
 
